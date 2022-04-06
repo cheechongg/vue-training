@@ -6,21 +6,25 @@
 import forumData from "@/data.json";
 
 export default {
-  name: 'App',
+  name: "App",
   provide() {
     return {
       threads: this.threads,
       users: this.users,
       posts: this.posts,
-      addNewPost: this.addNewPost
-    }
+      forums: this.forums,
+      categories: this.categories,
+      addNewPost: this.addNewPost,
+    };
   },
   data() {
     return {
       threads: forumData.threads,
       users: forumData.users,
-      posts: forumData.posts
-    }
+      posts: forumData.posts,
+      forums: forumData.forums,
+      categories: forumData.categories,
+    };
   },
   methods: {
     addNewPost(newPost) {
@@ -32,10 +36,9 @@ export default {
     },
     getThreadIndex(threadId) {
       return this.threads.findIndex((v) => v.id === threadId);
-    }
+    },
   },
-  
-}
+};
 </script>
 
 <style>
