@@ -26,29 +26,35 @@ const getters = {
 };
 
 const actions = {
-  addNewPostAction({ state, commit }, payload) {
-    let threadIndex = state.general.thread.findIndex(
-      (v) => v.id === payload.threadId
-    );
-    let newThread = state.thread.map((x, i) => {
-      return {
-        ...x,
-        posts: i === threadIndex ? [...x.posts, payload.postId] : x.posts,
-      };
-    });
-
-    commit("general/addNewPost", {
-      threads: newThread,
-      newPost: payload,
+  addNewPostAction({ commit }, { newPost }) {
+    commit("addNewPost", newPost);
+    commit("addNewPostToThread", {
+      threadId: newPost.threadId,
+      postId: newPost.postId,
     });
     // commit
+  },
+  updateUser(context, payload) {
+    console.log(payload);
+    context.commit("updateUser", {
+      user: payload,
+      userId: payload.id,
+    });
   },
 };
 
 const mutations = {
   addNewPost(state, payload) {
-    state.posts.push(payload.newPost);
-    state.threads = payload.threads;
+    state.posts.push(payload);
+  },
+  addNewPostToThread(state, { postId, threadId }) {
+    const thread = state.threads.find((v) => v.id === threadId);
+    thread.posts.push(postId);
+  },
+  updateUser(state, { user, userId }) {
+    let selectedUserIndex = state.users.findIndex((v) => v.id === userId);
+    console.log("hihhi");
+    state.users[selectedUserIndex] = user;
   },
 };
 

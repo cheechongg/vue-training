@@ -1,12 +1,14 @@
 <template>
-  <div class="forum-topic">{{ forum.name }}</div>
-  <div class="forum-description">
-    <div class="description">{{ forum.description }}</div>
-    <div class="cta">
-      <button type="button">Start a thread</button>
+  <div class="w-100">
+    <div class="forum-topic">{{ forum.name }}</div>
+    <div class="forum-description">
+      <div class="description">{{ forum.description }}</div>
+      <div class="cta">
+        <button type="button">Start a thread</button>
+      </div>
     </div>
+    <ThreadList :threadList="threadsListing" />
   </div>
-  <ThreadList :threadList="threadsListing" />
 </template>
 
 <script>

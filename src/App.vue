@@ -1,49 +1,27 @@
 <template>
-  <router-view></router-view>
+  <TheNavbar />
+  <div class="container">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+import TheNavbar from "@/components/Layouts/TheNavbar";
+import "@/assets/style.css";
+
 export default {
   name: "App",
-  provide() {
-    return {
-      // threads: this.threads,
-      // users: this.users,
-      // posts: this.posts,
-      // forums: this.forums,
-      // categories: this.categories,
-      addNewPost: this.addNewPost,
-    };
+  components: {
+    TheNavbar,
   },
   data() {
-    return {
-      // threads: forumData.threads,
-      // users: forumData.users,
-      // posts: forumData.posts,
-      // forums: forumData.forums,
-      // categories: forumData.categories,
-    };
+    return {};
   },
-  methods: {
-    addNewPost(newPost) {
-      let threadIndex = this.getThreadIndex(newPost.threadId);
-      this.threads[threadIndex].posts.push(newPost.postId);
-      this.posts.push(newPost);
-    },
-    getThreadIndex(threadId) {
-      return this.threads.findIndex((v) => v.id === threadId);
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style lang="scss">
-.container {
-  width: 100%;
-  max-width: 980px;
-  margin: 0 auto;
-}
-
 .custom-list {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 

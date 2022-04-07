@@ -5,6 +5,7 @@ import Post from "@/pages/PageShowPost";
 import Forum from "@/pages/PageForum";
 import Category from "@/pages/PageCategory";
 import NotFound from "@/pages/PageNotFound";
+import Profile from "@/pages/PageProfile";
 
 import threadData from "@/data.json";
 
@@ -48,6 +49,11 @@ const routes = [
         });
       }
     },
+  },
+  {
+    path: "/me",
+    name: "profile",
+    component: Profile,
   },
   {
     path: "/:pathMatch(.*)*",

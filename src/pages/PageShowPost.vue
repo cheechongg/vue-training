@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import PostCard from "@/components/PageThreadShow/PostCard.vue";
 
 export default {
@@ -35,6 +37,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      auth: "auth/getCurrentUser",
+    }),
     thread() {
       return this.$store.getters["general/getThread"].find(
         (v) => v.id === this.threadId
@@ -61,7 +66,7 @@ export default {
       let userId = "ALXhxjwgY9PinwNGHpfai6OWyDu2";
       let currentTimestamp = Math.floor(Date.now() / 1000);
       let newPost = {
-        userId,
+        userId: this.auth.id,
         edited: {
           at: currentTimestamp,
           by: userId,
@@ -73,7 +78,10 @@ export default {
         postId: `gggg_${currentTimestamp}`,
       };
 
-      this.addNewPost(newPost);
+      this.$store.dispatch({
+        type: "general/addNewPostAction",
+        newPost,
+      });
 
       this.newPostContent = "";
     },
