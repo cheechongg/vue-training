@@ -4,7 +4,7 @@
     <div class="forum-description">
       <div class="description">{{ forum.description }}</div>
       <div class="cta">
-        <button type="button">Start a thread</button>
+        <button type="button" @click="createNewThread()">Start a thread</button>
       </div>
     </div>
     <ThreadList :threadList="threadsListing" />
@@ -90,6 +90,16 @@ export default {
       return this.$store.getters["general/getUser"].find(
         (usr) => usr.id === userId
       );
+    },
+    createNewThread() {
+      let forum = this.getForum(this.forumId);
+
+      this.$router.push({
+        name: "new-thread",
+        params: {
+          forum,
+        },
+      });
     },
   },
 };

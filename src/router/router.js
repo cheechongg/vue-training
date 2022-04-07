@@ -6,6 +6,7 @@ import Forum from "@/pages/PageForum";
 import Category from "@/pages/PageCategory";
 import NotFound from "@/pages/PageNotFound";
 import Profile from "@/pages/PageProfile";
+import ThreadCreate from "@/pages/PageThreadCreate";
 
 import threadData from "@/data.json";
 
@@ -54,6 +55,12 @@ const routes = [
     path: "/me",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/new-thread",
+    name: "new-thread",
+    component: ThreadCreate,
+    props: true,
   },
   {
     path: "/:pathMatch(.*)*",

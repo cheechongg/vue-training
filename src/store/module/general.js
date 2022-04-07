@@ -35,11 +35,14 @@ const actions = {
     // commit
   },
   updateUser(context, payload) {
-    console.log(payload);
     context.commit("updateUser", {
       user: payload,
       userId: payload.id,
     });
+  },
+  createNewThread(context, payload) {
+    context.commit("addNewThread", payload);
+    context.commit("addNewThreadToForum", {});
   },
 };
 
