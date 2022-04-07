@@ -1,7 +1,7 @@
 <template>
-  <div class="thread-list">
-    <div class="thread-title">Threads</div>
-    <div class="thread-body">
+  <div class="custom-list">
+    <div class="custom-list-title">Threads</div>
+    <div class="custom-list-body">
       <ThreadListItem
         v-for="(thread, index) in threadList"
         :key="thread.id"
@@ -53,14 +53,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.thread-title {
-  background-color: #34495e;
-  color: #fff;
-  padding: 0.5rem 0.8rem;
-  border-bottom-left-radius: 14px;
-}
 
-.thread-list {
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
-}
 </style>

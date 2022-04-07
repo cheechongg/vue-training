@@ -1,6 +1,6 @@
 <template>
-  <div class="category-list" v-for="category in list" :key="category.id">
-    <div class="category-title">{{ category.name }}</div>
+  <div class="custom-list" v-for="category in list" :key="category.id">
+    <div class="custom-list-title"><router-link :to="{name: 'home'}">{{ category.name }}</router-link></div>
     <ForumList :categoryId="category.id" />
   </div>
 </template>
@@ -11,10 +11,10 @@ import ForumList from "./ForumList.vue";
 export default {
   name: "CategoriesList",
   components: { ForumList },
-  inject: ["categories", "forums"],
   computed: {
     list() {
-      let categories = this.categories.map((v) => {
+      console.log(this.$store.getters['general/getUser']());
+      let categories = this.$store.state.map((v) => {
         let forumsList = this.getForumByCategoryId(v.id);
 
         return {
@@ -40,6 +40,15 @@ export default {
   color: #fff;
   padding: 0.5rem 0.8rem;
   border-bottom-left-radius: 14px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .category-list {
