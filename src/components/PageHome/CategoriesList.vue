@@ -1,6 +1,8 @@
 <template>
   <div class="custom-list" v-for="category in list" :key="category.id">
-    <div class="custom-list-title"><router-link :to="{name: 'home'}">{{ category.name }}</router-link></div>
+    <div class="custom-list-title">
+      <router-link :to="{ name: 'home' }">{{ category.name }}</router-link>
+    </div>
     <ForumList :categoryId="category.id" />
   </div>
 </template>
@@ -13,8 +15,7 @@ export default {
   components: { ForumList },
   computed: {
     list() {
-      console.log(this.$store.getters['general/getUser']());
-      let categories = this.$store.state.map((v) => {
+      let categories = this.$store.getters["general/getCategory"].map((v) => {
         let forumsList = this.getForumByCategoryId(v.id);
 
         return {
@@ -28,7 +29,9 @@ export default {
   },
   methods: {
     getForumByCategoryId(categoryId) {
-      return this.forums.filter((v) => v.categoryId === categoryId);
+      return this.$store.getters["general/getForum"].filter(
+        (v) => v.categoryId === categoryId
+      );
     },
   },
 };

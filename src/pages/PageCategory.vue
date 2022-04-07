@@ -9,11 +9,8 @@
 </template>
 
 <script>
-// import ThreadList from "@/components/PageForum/ThreadList.vue";
-
 export default {
   name: "PageCategory",
-//   components: { ThreadList },
   props: {
     categoryId: String,
   },
@@ -22,7 +19,6 @@ export default {
       threadsList: [],
     };
   },
-  inject: ["threads", "users", "posts", "forums"],
   computed: {
     postList() {
       let thread = this.getThread(this.forumId);
@@ -51,16 +47,20 @@ export default {
   },
   methods: {
     getThread(forumId) {
-      let res = this.threads.filter((v) => v.forumId === forumId);
+      let res = this.$store.getters["general/getThread"].filter(
+        (v) => v.forumId === forumId
+      );
 
       return res;
     },
     getPostWithPostArr(postArr) {
-      let result = this.posts
+      let result = this.$store.getters["general/getPost"]
         .filter((v) => postArr.includes(v.id))
         .map((v) => {
-          let user = this.users.find((usr) => usr.id === v.userId);
-          let postsCount = this.posts.filter(
+          let user = this.$store.getters["general/getUser"].find(
+            (usr) => usr.id === v.userId
+          );
+          let postsCount = this.$store.getters["general/getPost"].filter(
             (pst) => pst.userId === v.userId
           ).length;
 
@@ -74,12 +74,16 @@ export default {
       return result;
     },
     getForum(forumId) {
-      let res = this.forums.find((v) => v.id === forumId);
+      let res = this.$store.getters["general/getForum"].find(
+        (v) => v.id === forumId
+      );
 
       return res;
     },
     getUser(userId) {
-      return this.users.find((usr) => usr.id === userId);
+      return this.$store.getters["general/getUser"].find(
+        (usr) => usr.id === userId
+      );
     },
   },
 };

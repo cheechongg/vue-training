@@ -1,103 +1,108 @@
 <template>
-    <div class="container">
-        <h2>{{ thread.title }}</h2>
-        <PostCard 
-            v-for="post in threadPost"
-            :postDetails="{
-                name: post.user,
-                avatar: post.avatar,
-                postCount: 107,
-                text: post.text,
-                publishedAt: post.publishedAt
-            }"
-            :key="post.id"
-        />
-        <form @submit.prevent="submitNewPost()">
-            <textarea class="post-content" v-model="newPostContent"></textarea>
-            <button class="post-button" type="submit">Submit</button>
-        </form>
-    </div>
+  <div class="container">
+    <h2>{{ thread.title }}</h2>
+    <PostCard
+      v-for="post in threadPost"
+      :postDetails="{
+        name: post.user,
+        avatar: post.avatar,
+        postCount: 107,
+        text: post.text,
+        publishedAt: post.publishedAt,
+      }"
+      :key="post.id"
+    />
+    <form @submit.prevent="submitNewPost()">
+      <textarea class="post-content" v-model="newPostContent"></textarea>
+      <button class="post-button" type="submit">Submit</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import PostCard from "@/components/PageThreadShow/PostCard.vue";
 
 export default {
-    components: {
-        PostCard
+  components: {
+    PostCard,
+  },
+  props: {
+    threadId: Number,
+  },
+  data() {
+    return {
+      newPostContent: "",
+    };
+  },
+  computed: {
+    thread() {
+      return this.$store.getters["general/getThread"].find(
+        (v) => v.id === this.threadId
+      );
     },
-    props: {
-        threadId: Number
+    threadPost() {
+      return this.$store.getters["general/getPost"]
+        .filter((v) => v.threadId === this.threadId)
+        .map((v) => {
+          let user = this.$store.getters["general/getUser"].find(
+            (usr) => usr.id === v.userId
+          );
+
+          return {
+            ...v,
+            user: user?.name || "",
+            avatar: user?.avatar || "",
+          };
+        });
     },
-    inject: ['threads', 'posts', 'users', 'addNewPost'],
-    data() {
-        return {
-            newPostContent: ""
-        }
-    },
-    computed: {
-        thread() {
-            return this.threads.find((v) => v.id === this.threadId)
+  },
+  methods: {
+    submitNewPost() {
+      let userId = "ALXhxjwgY9PinwNGHpfai6OWyDu2";
+      let currentTimestamp = Math.floor(Date.now() / 1000);
+      let newPost = {
+        userId,
+        edited: {
+          at: currentTimestamp,
+          by: userId,
+          moderated: false,
         },
-        threadPost() {
-            return this.posts.filter((v) => v.threadId === this.threadId).map((v) => {
-                let user = this.users.find((usr) => usr.id === v.userId);
+        text: this.newPostContent,
+        threadId: this.threadId,
+        publishedAt: currentTimestamp,
+        postId: `gggg_${currentTimestamp}`,
+      };
 
-                return {
-                    ...v,
-                    user: user?.name || "",
-                    avatar: user?.avatar || ""
-                }
-            });
-        }
+      this.addNewPost(newPost);
+
+      this.newPostContent = "";
     },
-    methods: {
-        submitNewPost() {
-            let userId = "ALXhxjwgY9PinwNGHpfai6OWyDu2";
-            let currentTimestamp = Math.floor(Date.now() / 1000)
-            let newPost = {
-                userId,
-                edited: {
-                    at: currentTimestamp,
-                    by: userId,
-                    moderated: false
-                },
-                text: this.newPostContent,
-                threadId: this.threadId,
-                publishedAt: currentTimestamp,
-                postId: `gggg_${currentTimestamp}`
-            }
-            
-            this.addNewPost(newPost);
-
-            this.newPostContent = ""
-        }
-    }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    form {
-        width: 100%;
-    }
+form {
+  width: 100%;
+}
 
-    .post-content {
-        width: 100%;
-        height: 250px;
-        padding: 0.5rem;
-        box-sizing: border-box
-    }
+.post-content {
+  width: 100%;
+  height: 250px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
 
-    .post-button {
-        background: #34495E;
-        color: #fff;
-        font-size: 1rem;
-        padding: 0.8rem 1.3rem;
-        border: none;
-        border-radius: 0.3rem;
-        float: right;
-        margin-bottom: 1.5rem;
-        margin-top: 1rem;
-        cursor: pointer;
-    }
+.post-button {
+  background: #34495e;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.8rem 1.3rem;
+  border: none;
+  border-radius: 0.3rem;
+  float: right;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
 </style>

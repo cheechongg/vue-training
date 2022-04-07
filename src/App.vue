@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 export default {
   name: "App",
   provide() {
@@ -30,8 +29,6 @@ export default {
       let threadIndex = this.getThreadIndex(newPost.threadId);
       this.threads[threadIndex].posts.push(newPost.postId);
       this.posts.push(newPost);
-
-      console.log(this.posts);
     },
     getThreadIndex(threadId) {
       return this.threads.findIndex((v) => v.id === threadId);

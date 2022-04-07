@@ -1,6 +1,5 @@
 <template>
   <div class="custom-list">
-    <!-- <div class="forum-title">Forums</div> -->
     <div class="custom-body">
       <ForumListItem
         v-for="(forum, index) in forumList"
@@ -20,7 +19,7 @@ import ForumListItem from "./ForumListItem.vue";
 
 export default {
   name: "ForumList",
-  inject: ["threads", "users", "forums"],
+  // inject: ["threads", "users", "forums"],
   components: {
     ForumListItem,
   },
@@ -34,12 +33,14 @@ export default {
   },
   methods: {
     getUser(userId) {
-      let result = this.users.find((v) => v.id === userId);
+      let result = this.$store.getters["general/getUser"].find(
+        (v) => v.id === userId
+      );
 
       return { user: result?.name || "", avatar: result?.avatar || "" };
     },
     getThread() {
-      let result = this.threads.map((v) => {
+      let result = this.$store.getters["general/getThread"].map((v) => {
         let user = this.getUser(v.userId);
 
         return {
@@ -54,7 +55,7 @@ export default {
   },
   computed: {
     forumList() {
-      return this.forums
+      return this.$store.getters["general/getForum"]
         .filter((v) => v.categoryId === this.categoryId)
         .map((v) => {
           return {

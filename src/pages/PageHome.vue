@@ -12,31 +12,11 @@ import CategoryList from "@/components/PageHome/CategoriesList.vue";
 
 export default {
   name: "Forum",
-  inject: ["threads", "users", "posts"],
   components: {
     ForumList,
     CategoryList,
   },
-  methods: {
-    getPostThreadInformation(thread) {
-      let posts = this.posts
-        .filter((v) => thread.posts.includes(v.id))
-        .map((v) => {
-          let user = this.users.find((usr) => usr.id === v.userId);
-          let postsCount = this.posts.filter(
-            (pst) => pst.userId === v.userId
-          ).length;
-
-          return {
-            ...v,
-            user,
-            postsCount,
-          };
-        });
-
-      return posts;
-    },
-  },
+  methods: {},
 };
 </script>
 

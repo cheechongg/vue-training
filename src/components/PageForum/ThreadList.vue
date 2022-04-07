@@ -22,7 +22,6 @@ import ThreadListItem from "./ThreadListItem.vue";
 
 export default {
   name: "ThreadList",
-  inject: ["threads", "users"],
   components: {
     ThreadListItem,
   },
@@ -31,12 +30,14 @@ export default {
   },
   methods: {
     getUser(userId) {
-      let result = this.users.find((v) => v.id === userId);
+      let result = this.$store.getters["general/getUser"].find(
+        (v) => v.id === userId
+      );
 
       return { user: result?.name || "", avatar: result?.avatar || "" };
     },
     getThread() {
-      let result = this.threads.map((v) => {
+      let result = this.$store.getters["general/getThread"].map((v) => {
         let user = this.getUser(v.userId);
 
         return {
@@ -53,5 +54,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

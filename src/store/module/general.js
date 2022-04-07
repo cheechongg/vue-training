@@ -8,81 +8,49 @@ const getters = {
   getTest() {
     return state.categories;
   },
-  getCategory:
-    (state) =>
-    (id = null) => {
-      if (id) {
-        return state.categories.find((x) => x.id === id);
-      } else {
-        return state.categories;
-      }
-    },
-  getForum:
-    (state) =>
-    (id = null) => {
-      if (id) {
-        return state.forums.find((x) => x.id === id);
-      } else {
-        return state.forums;
-      }
-    },
-  getThread:
-    (state) =>
-    (id = null) => {
-      if (id) {
-        return state.threads.find((x) => x.id === id);
-      } else {
-        return state.threads;
-      }
-    },
-  getUser:
-    (state) =>
-    (id = null) => {
-      if (id) {
-        return state.users.find((x) => x.id === id);
-      } else {
-        return state.users;
-      }
-    },
-  getPost:
-    (state) =>
-    (id = null) => {
-      if (id) {
-        return state.posts.find((x) => x.id === id);
-      } else {
-        return state.posts;
-      }
-    },
-  getThreadIndex: (state) => (id) => {
-    return state.threads.findIndex((x) => x.id === id);
-  }
+  getCategory(state) {
+    return state.categories;
+  },
+  getForum(state) {
+    return state.forums;
+  },
+  getThread(state) {
+    return state.threads;
+  },
+  getUser(state) {
+    return state.users;
+  },
+  getPost(state) {
+    return state.posts;
+  },
 };
 
 const actions = {
-  addNewPostAction({state, commit, getters}, payload) {
-    let threadIndex = getters.getThreadIndex(payload.threadId);
+  addNewPostAction({ state, commit }, payload) {
+    let threadIndex = state.general.thread.findIndex(
+      (v) => v.id === payload.threadId
+    );
     let newThread = state.thread.map((x, i) => {
       return {
         ...x,
-        posts: i === threadIndex ? [...x.posts, payload.postId] : x.posts
-      }
+        posts: i === threadIndex ? [...x.posts, payload.postId] : x.posts,
+      };
     });
 
-
-    commit('general/addNewPost', {
+    commit("general/addNewPost", {
       threads: newThread,
-      newPost: payload
-    })
+      newPost: payload,
+    });
     // commit
-  }
+  },
 };
 
 const mutations = {
   addNewPost(state, payload) {
     state.posts.push(payload.newPost);
     state.threads = payload.threads;
-  }
-}
+  },
+};
 
 const general = {
   namespaced: true,
@@ -90,6 +58,6 @@ const general = {
   getters,
   actions,
   mutations,
-}
+};
 
 export default general;
