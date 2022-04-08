@@ -6,6 +6,7 @@ const state = () => ({
 
 const getters = {
   getTest() {
+    console.log('hihihihiih')
     return state.categories;
   },
   getCategory(state) {

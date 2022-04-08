@@ -19,7 +19,7 @@
 
 <script>
 import ThreadListItem from "./ThreadListItem.vue";
-
+console.log('hihihi');
 export default {
   name: "ThreadList",
   components: {
