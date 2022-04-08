@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="w-100">
     <h2>{{ thread.title }}</h2>
     <PostCard
       v-for="post in threadPost"

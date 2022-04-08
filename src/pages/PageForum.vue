@@ -92,12 +92,12 @@ export default {
       );
     },
     createNewThread() {
-      let forum = this.getForum(this.forumId);
+      // let forum = this.getForum(this.forumId);
 
       this.$router.push({
         name: "new-thread",
         params: {
-          forum,
+          forumId: this.forumId,
         },
       });
     },

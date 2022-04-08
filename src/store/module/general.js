@@ -6,7 +6,6 @@ const state = () => ({
 
 const getters = {
   getTest() {
-    console.log('hihihihiih')
     return state.categories;
   },
   getCategory(state) {
@@ -41,9 +40,20 @@ const actions = {
       userId: payload.id,
     });
   },
-  createNewThread(context, payload) {
-    context.commit("addNewThread", payload);
-    context.commit("addNewThreadToForum", {});
+  createNewThread(context, { thread, forumId}) {
+    const postId = 'ppppp' + thread.publishedAt;
+
+    context.commit("addNewThread", thread);
+    context.commit("addNewThreadToForum", {
+      forumId, threadId: thread.id
+    });
+    context.commit("addNewPost", {
+      publishedAt: thread.publishedAt,
+      text: thread.text,
+      threadId: thread.id,
+      userId: thread.userId,
+      id: postId
+    })
   },
 };
 
@@ -57,9 +67,25 @@ const mutations = {
   },
   updateUser(state, { user, userId }) {
     let selectedUserIndex = state.users.findIndex((v) => v.id === userId);
-    console.log("hihhi");
     state.users[selectedUserIndex] = user;
   },
+  addNewThreadToForum(state, { forumId, threadId}) {
+    const forumIndex = state.forums.findIndex((v) => v.id === forumId);
+    state.forums[forumIndex].threads.push(threadId);
+  },
+  addNewThread(state, newThread) {
+    state.threads.push(newThread);
+  },
+  addThreadIdToUser(state, { threadId, userId }){
+    const selectedUserIndex = state.users.findIndex((v) => v.id === userId);
+
+    if(state.users[selectedUserIndex].threads) {
+      state.users[selectedUserIndex].thread.push(threadId)
+    } else {
+      state.users[selectedUserIndex].thread = threadId;
+    }
+    
+  }
 };
 
 const general = {
@@ -71,3 +97,4 @@ const general = {
 };
 
 export default general;
+ 
