@@ -16,7 +16,6 @@ export default {
     ForumList,
     CategoryList,
   },
-  methods: {},
 };
 </script>
 

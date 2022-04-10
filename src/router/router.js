@@ -7,6 +7,7 @@ import Category from "@/pages/PageCategory";
 import NotFound from "@/pages/PageNotFound";
 import Profile from "@/pages/PageProfile";
 import ThreadCreate from "@/pages/PageThreadCreate";
+import ThreadEdit from "@/pages/PageThreadEdit";
 
 import threadData from "@/data.json";
 
@@ -26,6 +27,12 @@ const routes = [
     path: "/forum/:forumId",
     name: "forum",
     component: Forum,
+    props: true,
+  },
+  {
+    path: "/thread/:threadId/edit",
+    name: "edit-thread",
+    component: ThreadEdit,
     props: true,
   },
   {

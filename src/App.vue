@@ -17,7 +17,9 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  beforeCreate() {
+    this.$store.dispatch("general/getResources");
+  },
 };
 </script>
 

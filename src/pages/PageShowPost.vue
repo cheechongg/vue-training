@@ -1,6 +1,23 @@
 <template>
   <div class="w-100">
-    <h2>{{ thread.title }}</h2>
+    <h2>
+      {{ thread.title }}
+      <router-link
+        :to="{ name: 'edit-thread', props: { threadId: thread.id } }"
+        class="btn-green btn-small"
+        >Edit Post</router-link
+      >
+    </h2>
+    <p>
+      By <a href="#" class="link-unstyled">{{ thread.author.name }}</a
+      >, {{ thread.publishedAt }}.
+      <span
+        style="float: right; margin-top: 2px"
+        class="hide-mobile text-faded text-small"
+        >{{ thread.repliesCount }} replies by
+        {{ thread.contributorsCount }} contributors</span
+      >
+    </p>
     <PostCard
       v-for="post in threadPost"
       :postDetails="{
@@ -41,9 +58,7 @@ export default {
       auth: "auth/getCurrentUser",
     }),
     thread() {
-      return this.$store.getters["general/getThread"].find(
-        (v) => v.id === this.threadId
-      );
+      return this.$store.getters["general/thread"](this.threadId);
     },
     threadPost() {
       return this.$store.getters["general/getPost"]
